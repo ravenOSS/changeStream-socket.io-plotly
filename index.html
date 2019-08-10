@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +8,34 @@
   <title>plotly1</title>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
+
 <body>
-  <div id="plot1" style="width:600px; height: 250px"></div>
+  <div id="plot1" style="width:600px; height: auto"></div>
 </body>
 
 <script>
-PLOT1 = document.getElementById('plot1')
-Plotly.plot( PLOT1, [{
-  x: [1,2,3,4,5],
-  y: [1,2,4,8,16]
-}],
-{ 
-  margin: { t: 0 }
-});
-  </script>
+  PLOT1 = document.getElementById('plot1')
+
+  let data1 = [{
+    x: [1, 2, 3, 4, 5],
+    y: [1, 2, 4, 8, 16],
+    type: 'scatter'
+  }];
+
+  let layout1 = {
+    title: 'Test Plotting',
+    xaxis: {
+      title: 'Timeline',
+      showgrid: true,
+    },
+    yaxis: {
+      title: 'Tank Quantity',
+    },
+    margin: { t: 200 }
+  };
+
+  Plotly.react(PLOT1, data1, layout1);
+
+</script>
+
 </html>
