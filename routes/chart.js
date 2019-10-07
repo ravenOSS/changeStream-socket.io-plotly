@@ -1,10 +1,21 @@
 var express = require('express')
 var router = express.Router()
+const path = require('path')
 
 /* GET chart page. */
-router.get('/chart', function (req, res, next) {
-  res.render('chart')
-  // res.render('index', { title: 'Express' })
+const options = {
+  root: path.join(__dirname, '../views')
+}
+
+/* GET chart page. */
+router.get('/', (req, res, next) => {
+  res.sendFile('chart.html', options, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(`Sent: chart`)
+    }
+  })
 })
 
 module.exports = router
