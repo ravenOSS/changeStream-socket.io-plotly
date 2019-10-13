@@ -5,7 +5,7 @@ const logger = require('morgan')
 
 // const indexRouter = require('./routes/index')
 // const chartRouter = require('./routes/chart')
-// const mychartRouter = require('./routes/chart')
+const plotlyChartRouter = require('./routes/plotlyChart')
 
 const app = express()
 
@@ -13,19 +13,15 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static('views', { index: false, extensions: ['html'] }))
+// app.use(express.static('views', { index: false, extensions: ['html'] }))
 // app.use(express.static(path.join(__dirname, 'views'), { index: false, extensions: ['html'] }))
 // app.use(serveStatic(path.join(__dirname, 'views')))
-// NOTE: when not specifying a default view engine, it is necessary
-// to add options to express.static (or serveStatic) otherwise only
-// index.html will be served without curious errors.
-// If express.static is used, routing should not also be included
 
 const port = 3300
 
 // app.use('/', indexRouter)
 // app.use('/chart', chartRouter)
-// app.use('/mychart', mychartRouter)
+app.use('/plotlyChart', plotlyChartRouter)
 
 // app.listen(port, () => console.log(`Server listening on port ${port}`))
 
@@ -45,7 +41,7 @@ io.on('connection', socket => {
 })
 
 const transmit = data => {
-  io.emit('serverMsg', data)
+  io.emit('chartData', data)
   console.log(`Data emitted: ${data}`)
 }
 /**

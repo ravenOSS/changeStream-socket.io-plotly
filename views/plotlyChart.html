@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Charts</title>
+  <!-- <link rel="stylesheet" href="/stylesheets/style.css"> -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+</head>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font: 13px Helvetica, Arial; }
+  #messages { list-style-type: none; margin: 0; padding: 0; }
+  #messages li { padding: 5px 10px; }
+  #messages li:nth-child(odd) { background: #eee; }
+
+</style>
+
+<body>
+
+  <h1>Live Charting</h1>
+  <p>Plotly, mongodb, socket.io</p>
+
+<div id="pchart"></div>
+<ul id="messages"></ul>
+<div id="graph"></div>
+
+<script>
+
+const layout = {
+ title:'Streaming data to Plotly',
+ height: 550,
+ width: 1200,
+ font: {
+   family: 'Lato',
+   size: 20,
+   color: 'rgb(100,150,200)'
+ },
+ plot_bgcolor: 'rgba(200,255,0,0.1)',
+ margin: {
+   pad: 10
+ },
+ xaxis: {
+   title: 'Timestamp',
+   titlefont: {
+    family: 'Lato',
+     color: 'black',
+     size: 14
+   },
+   type: 'date'
+ },
+ yaxis: {
+   title: 'Tank Reading',
+   titlefont: {
+    family: 'Lato',
+     color: 'black',
+     size: 14
+   },
+   type: 'linear',
+   range: [0, 100] // domain?
+  }
+};
+
+// Plotly requires an initial trace for animation to work
+let xArray0 = [moment().subtract(10, 'sec').format(), moment().format() ]
+let yArray0 = [0, .1]
+
+let trace0 = {
+   x: xArray0,
+   y: yArray0,
+   line: {simplify: false}
+  //  type: 'line'
+ }
+
+let data = [trace0]
+
+Plotly.newPlot('pchart', data, layout)
+
+const dataPoints = 15
+
+let socket = io();
+socket.on('chartData', (msg) => {
+  console.log(`msg.Time: ${msg[0]}`)
+  console.log(`msg.Data: ${msg[1]}`)
+
+if (xArray0.length < dataPoints ) {
+  xArray0.push(msg[0])
+  yArray0.push(msg[1])
+} else {
+  xArray0.push(msg[0])
+  xArray0.shift()
+  yArray0.push(msg[1])
+  yArray0.shift()
+}
+
+trace0 = {
+   xArray0,
+   yArray0,
+   line: {simplify: false}
+}
+
+let data = [trace0]
+ console.log(`xArray0 after new data: ${xArray0}`)
+ console.log(`yArray0 after new data: ${yArray0}`)
+ 
+//  Plotly.update('pchart', trace0, layout)
+
+Plotly.animate('pchart', { 
+  data, 
+  traces: [0], 
+  layout: {
+    xaxis: {
+      range: [xArray0[0], xArray0[xArray0.length - 1]]
+    } 
+  },
+  transition: {
+    duration: 1000,
+    easing: 'cubic-in-out'
+  },
+  frame: {
+    duration: 500
+  }
+  })
+});
+
+// =========================================
+function rand() {
+  return Math.random();
+}
+
+var time = new Date();
+
+var data0 = [{
+  x: [time],
+  y: [rand()],
+  mode: 'lines',
+  line: {color: '#80CAF6'}
+}]
+
+
+Plotly.plot('graph', data0);
+
+var cnt = 0;
+
+var interval = setInterval(function() {
+
+  var time = new Date();
+
+  var update = {
+  x:  [[time]],
+  y: [[rand()]]
+  }
+
+  Plotly.extendTraces('graph', update, [0])
+
+  if(++cnt === 100) clearInterval(interval);
+}, 3000);
+// ==========================================
+
+// ==========================================
+// var time = new Date();
+
+// var trace1 = {
+//   x: [time],
+//   y: [Math.random() + 1],
+//   mode: 'line'
+// };
+
+// var trace2 = {
+//   x: [time],
+//   y: [Math.random()],
+//   yaxis: 'y2',
+//   mode: 'line'
+// };
+
+// var toPlot = [trace1, trace2];
+
+// var layout = {
+// showlegend: true,
+// yaxis: {
+//   title: 'Mvmt (yes/no)'
+// },
+// yaxis2: {
+//   title: 'Stress (%)',
+//   titlefont: {color: 'rgb(148, 103, 189)'},
+//   tickfont: {color: 'rgb(148, 103, 189)'},
+//   side: 'right',
+//   overlaying: 'y'
+// }
+// };
+
+// Plotly.plot('tester', toPlot, layout);
+
+// var interval = setInterval(function() {
+
+//   var time = new Date();
+
+//   Plotly.extendTraces('tester', {
+//     x: [[time], [time]],
+//     y: [[Math.random()], [Math.random()]]
+//   }, [0, 1])
+// }, 1000)
+
+</script>
+</body>
+</html>
