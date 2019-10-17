@@ -100,7 +100,12 @@ if (xArray0.length < dataPoints ) {
 trace0 = {
    xArray0,
    yArray0,
-   line: {simplify: false}
+  //  line: {simplify: false},
+  line: { 
+   type: 'scatter',
+   mode: 'lines',
+   shape: 'spline'
+  }
 }
 
 let data = [trace0]

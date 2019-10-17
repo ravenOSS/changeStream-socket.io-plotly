@@ -39,7 +39,7 @@ io.on('connection', socket => {
     console.log(`Client message: ${msg}`)
   })
 })
-
+// transmit needs to test for active connection before emitting data
 const transmit = data => {
   io.emit('chartData', data)
   console.log(`Data emitted: ${data}`)
