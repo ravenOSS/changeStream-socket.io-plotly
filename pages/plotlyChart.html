@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Charts</title>
   <!-- <link rel="stylesheet" href="/stylesheets/style.css"> -->
-  <script src="/socket.io/socket.io.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script> -->
+  <!-- <script src="/socket.io/socket.io.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
@@ -76,7 +76,7 @@ Plotly.newPlot('pchart', data, layout)
 
 const dataPoints = 15
 
-let socket = io();
+let socket = io('http://localhost:3300');
 socket.on('chartData', (msg) => {
   console.log(`msg.Time: ${msg[0]}`)
   console.log(`msg.Data: ${msg[1]}`)

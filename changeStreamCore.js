@@ -1,13 +1,15 @@
 const dotenv = require('dotenv').config()
 const app = require('./app')
-const MongoClient = require('mongodb').MongoClient
-// const io = require('./socket')
+const server = app.server
+const io = require('socket.io')(server)
+const testMessage = app.testMessage
+// const transmit = app.transmit
 const assert = require('assert')
 
-console.log(`Exported app message(core): ${app.testMessage}`)
-console.log(typeof app.testMessage)
-console.log(app.transmit)
+console.log(`Exported app message(core):`)
+console.log(testMessage)
 
+const MongoClient = require('mongodb').MongoClient
 const atlasURL = process.env.atlasURL
 
 const client = new MongoClient(atlasURL, {
@@ -37,6 +39,15 @@ client.connect(err => {
 
   let changeStream
 
+  const transmit = data => {
+    // console.log(`io connected? ${socket.connected}`)
+    // if (io.connected) {
+    io.emit('chartData', data)
+    console.log(`Data emitted: ${data}`)
+    // }
+    // console.log(`No socket connection`)
+  }
+
   const startStream = () => {
     console.log(`startStream`)
     changeStream = collection.watch([pipeline], {
@@ -45,17 +56,15 @@ client.connect(err => {
       const packet = []
       packet[0] = document.fullDocument.TimeStamp
       packet[1] = document.fullDocument.Data
-      app.transmit(packet)
+      transmit(packet)
     })
   }
-  startStream()
 
-  // const transmit = (data) => {
-  //   console.log(`packet: ${data}`)
-  // }
+  io.on('connection', socket => {
+    startStream()
+    console.log(`chartPage connected: ${socket.id}`)
+    socket.on('disconnect', () => {
+      console.log(`ChartPage disconnected: ${socket.id}`)
+    })
+  })
 })
-
-// const transmit = data => {
-//   io.emit('serverMsg', data)
-// }
-// module.exports = { transmit }

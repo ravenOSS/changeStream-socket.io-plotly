@@ -15,50 +15,48 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-// app.use(express.static('views', { index: false, extensions: ['html'] }))
-// app.use(express.static(path.join(__dirname, 'views'), { index: false, extensions: ['html'] }))
-// app.use(serveStatic(path.join(__dirname, 'views')))
 
 app.use('/plotlyChart', plotlyChartRouter)
 app.use('/index', indexRouter)
 
 const server = require('http').createServer(app)
-// exports.server = require('http').createServer(app)
 
-exports.testMessage = 'App.js here!'
-// console.log(`App testMessage: ${testMessage}`)
-
-// // /**
-// //  * Create socket.io instance
-// //  */
-const io = require('socket.io')(server)
-
-io.on('connection', socket => {
-  console.log(`chartPage connected: ${socket.id}`)
-  socket.on('disconnect', () => {
-    console.log(`ChartPage disconnected: ${socket.id}`)
-  })
-})
-
-// transmit needs to test for active connection before emitting data
-exports.transmit = data => {
-// const transmit = data => {
-  // console.log(`io connected? ${socket.connected}`)
-  // if (io.connected) {
-  io.emit('chartData', data)
-  console.log(`Data emitted: ${data}`)
-  // }
-  // console.log(`No socket connection`)
-}
 /**
  * Listen on provided port, on all network interfaces.
  */
 server.listen(port, () => console.log(`Server listening on port ${port}`))
-// module.exports.transmit = transmit
 
-// module.exports = { transmit, testMessage }
-// module.exports.transmit = transmit
-// module.exports.testMessage = testMessage
+const testMessage = 'App.js here!'
+module.exports.testMessage = testMessage
+module.exports.server = server
+
+console.log(`module.exports:`)
+console.log(module.exports)
+// ===================================================
+// exports.server = require('http').createServer(app)
+
+//  * Create socket.io instance
+
+// const io = require('socket.io')(server)
+// const io = require('socket.io')(server)
+
+// io.on('connection', socket => {
+//   console.log(`chartPage connected: ${socket.id}`)
+//   socket.on('disconnect', () => {
+//     console.log(`ChartPage disconnected: ${socket.id}`)
+//   })
+// })
+// ===================================================
+// transmit needs to test for active connection before emitting data
+// const transmit = data => {
+// // const transmit = data => {
+//   // console.log(`io connected? ${socket.connected}`)
+//   // if (io.connected) {
+//   io.emit('chartData', data)
+//   console.log(`Data emitted: ${data}`)
+//   // }
+//   // console.log(`No socket connection`)
+// }
 // ===================================================
 // const dotenv = require('dotenv').config()
 // const MongoClient = require('mongodb').MongoClient
