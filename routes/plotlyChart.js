@@ -4,12 +4,12 @@ const path = require('path')
 
 /* GET chart page. */
 const options = {
-  root: path.join(__dirname, '../views')
+  root: path.join(__dirname, '../pages')
 }
 
 /* GET chart page. */
-router.get('/', (req, res, next) => {
-  res.sendFile('plotlychart.html', options, (err) => {
+router.get('/', (req, res) => {
+  res.sendFile('plotlyChart.html', options, (err) => {
     if (err) {
       console.log(err)
     } else {

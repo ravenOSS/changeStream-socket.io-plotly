@@ -7,26 +7,19 @@
   <title>Charts</title>
   <!-- <link rel="stylesheet" href="/stylesheets/style.css"> -->
   <script src="/socket.io/socket.io.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script> -->
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
 </head>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font: 13px Helvetica, Arial; }
-  #messages { list-style-type: none; margin: 0; padding: 0; }
-  #messages li { padding: 5px 10px; }
-  #messages li:nth-child(odd) { background: #eee; }
-
-</style>
 
 <body>
 
   <h1>Live Charting</h1>
   <p>Plotly, mongodb, socket.io</p>
+  <p>This is the new chart page</p>
 
-<div id="pchart"></div>
-<ul id="messages"></ul>
+<div id="pchart" style="width:50%; height:25%"></div>
 <div id="graph"></div>
 
 <script>
@@ -47,18 +40,18 @@ const layout = {
  xaxis: {
    title: 'Timestamp',
    titlefont: {
-    family: 'Lato',
-     color: 'black',
-     size: 14
+    family: 'Verdana, Sans-serif',
+     color: 'rgb(100,150,200)',
+     size: 18
    },
    type: 'date'
  },
  yaxis: {
-   title: 'Tank Reading',
+   title: 'Data Measurement',
    titlefont: {
-    family: 'Lato',
-     color: 'black',
-     size: 14
+    family: 'Verdana, Sans-serif',
+     color: 'rgb(100,150,200)',
+     size: 18
    },
    type: 'linear',
    range: [0, 100] // domain?
@@ -72,8 +65,9 @@ let yArray0 = [0, .1]
 let trace0 = {
    x: xArray0,
    y: yArray0,
-   line: {simplify: false}
-  //  type: 'line'
+    type: 'scatter',
+    mode: 'lines',
+    line: {shape: 'spline'}
  }
 
 let data = [trace0]
@@ -100,19 +94,16 @@ if (xArray0.length < dataPoints ) {
 trace0 = {
    xArray0,
    yArray0,
-   line: {
-   type: 'scatter',
-   mode: 'lines',
-   shape: 'spline'
-   }
+    type: 'scatter',
+    mode: 'lines+text',
+    line: {shape: 'spline'}
    //  line: {simplify: false},
 }
 
 let data = [trace0]
  console.log(`xArray0 after new data: ${xArray0}`)
  console.log(`yArray0 after new data: ${yArray0}`)
- 
-//  Plotly.update('pchart', trace0, layout)
+
 
 Plotly.animate('pchart', { 
   data, 
