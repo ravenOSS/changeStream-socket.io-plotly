@@ -38,21 +38,17 @@ client.connect(err => {
   let changeStream
 
   const transmit = data => {
-    // console.log(`io connected? ${socket.connected}`)
-    // if (io.connected) {
     io.emit('chartData', data)
     console.log(`Data emitted: ${data}`)
-    // }
-    // console.log(`No socket connection`)
   }
 
-  const startStream = () => {
+  const startStream = () => { // add test for cursor available
     console.log(`startStream`)
     changeStream = collection.watch([pipeline], {
       fullDocument: 'updateLookup' })
     changeStream.on('change', document => {
       const packet = []
-      packet[0] = document.fullDocument.TimeStamp
+      packet[0] = document.fullDocument.TimeStamp // could come from object:_id
       packet[1] = document.fullDocument.Data
       transmit(packet)
     })
@@ -66,4 +62,3 @@ client.connect(err => {
     })
   })
 })
-// module.exports.io = io

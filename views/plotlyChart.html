@@ -17,7 +17,10 @@
   <h1>Live Charting</h1>
   <p><h2> mongodb change stream, socket.io, plotly.js</h2></p>
 
-<div id="pchart" style="width:50%; height:25%"></div>
+  <div id="pchart"></div>
+  <div id="graph"></div>
+  <!-- <div id="pchart" style="width:50%; height:25%"></div>
+<div id="graph" style="width:50%; height:25%"></div> -->
 
 <script>
 
@@ -73,7 +76,8 @@ Plotly.newPlot('pchart', data, layout)
 
 const dataPoints = 15
 
-let socket = io('http://localhost:3300');
+// let socket = io('http://localhost:3300');
+let socket = io();
 socket.on('chartData', (msg) => {
   console.log(`msg.Time: ${msg[0]}`)
   console.log(`msg.Data: ${msg[1]}`)
@@ -116,84 +120,6 @@ Plotly.animate('pchart', {
   },
   })
 });
-
-// =========================================
-function rand() {
-  return Math.random();
-}
-
-var time = new Date();
-
-var data0 = [{
-  x: [time],
-  y: [rand()],
-  mode: 'lines',
-  line: {color: '#80CAF6'}
-}]
-
-
-Plotly.plot('graph', data0);
-
-var cnt = 0;
-
-var interval = setInterval(function() {
-
-  var time = new Date();
-
-  var update = {
-  x:  [[time]],
-  y: [[rand()]]
-  }
-
-  Plotly.extendTraces('graph', update, [0])
-
-  if(++cnt === 100) clearInterval(interval);
-}, 3000);
-// ==========================================
-
-// ==========================================
-// var time = new Date();
-
-// var trace1 = {
-//   x: [time],
-//   y: [Math.random() + 1],
-//   mode: 'line'
-// };
-
-// var trace2 = {
-//   x: [time],
-//   y: [Math.random()],
-//   yaxis: 'y2',
-//   mode: 'line'
-// };
-
-// var toPlot = [trace1, trace2];
-
-// var layout = {
-// showlegend: true,
-// yaxis: {
-//   title: 'Mvmt (yes/no)'
-// },
-// yaxis2: {
-//   title: 'Stress (%)',
-//   titlefont: {color: 'rgb(148, 103, 189)'},
-//   tickfont: {color: 'rgb(148, 103, 189)'},
-//   side: 'right',
-//   overlaying: 'y'
-// }
-// };
-
-// Plotly.plot('tester', toPlot, layout);
-
-// var interval = setInterval(function() {
-
-//   var time = new Date();
-
-//   Plotly.extendTraces('tester', {
-//     x: [[time], [time]],
-//     y: [[Math.random()], [Math.random()]]
-//   }, [0, 1])
-// }, 1000)
 
 </script>
 </body>
