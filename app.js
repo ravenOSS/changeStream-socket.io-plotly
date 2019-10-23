@@ -1,12 +1,10 @@
 const express = require('express')
-require('./changeStreamCore')
-require('./exportTesting')
-const path = require('path')
+
+// const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 
 const plotlyChartRouter = require('./routes/plotlyChart')
-const indexRouter = require('./routes/index')
 
 const app = express()
 const port = 3300
@@ -17,9 +15,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 app.use('/plotlyChart', plotlyChartRouter)
-app.use('/index', indexRouter)
 
 const server = require('http').createServer(app)
+const io = require('socket.io')(server)
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -27,11 +25,11 @@ const server = require('http').createServer(app)
 server.listen(port, () => console.log(`Server listening on port ${port}`))
 
 const testMessage = 'App.js here!'
-module.exports.testMessage = testMessage
-module.exports.server = server
 
-console.log(`module.exports:`)
-console.log(module.exports)
+module.exports = { io, testMessage }
+require('./changeStreamCore') // note exports need to be defined before changestream
+// otherwise you'll get io not defined error
+
 // ===================================================
 // exports.server = require('http').createServer(app)
 

@@ -1,13 +1,11 @@
 const dotenv = require('dotenv').config()
-const app = require('./app')
-const server = app.server
-const io = require('socket.io')(server)
-const testMessage = app.testMessage
-// const transmit = app.transmit
 const assert = require('assert')
+const app = require('./app')
+const io = app.io
 
-console.log(`Exported app message(core):`)
-console.log(testMessage)
+const testMessage = app.testMessage // debug
+
+console.log(`Exported app message(core): ${testMessage}`) // debug
 
 const MongoClient = require('mongodb').MongoClient
 const atlasURL = process.env.atlasURL
@@ -68,3 +66,4 @@ client.connect(err => {
     })
   })
 })
+// module.exports.io = io

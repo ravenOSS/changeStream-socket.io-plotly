@@ -30,7 +30,7 @@ client.connect(err => {
     const data = Math.round(Math.random() * 100)
     console.log(`Data: ${data}`)
     insertData(now, data)
-  }, 5000)
+  }, 3500)
 
   const insertData = (time, data) => {
     // Set the collection

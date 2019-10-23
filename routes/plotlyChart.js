@@ -4,7 +4,7 @@ const path = require('path')
 
 /* GET chart page. */
 const options = {
-  root: path.join(__dirname, '../pages')
+  root: path.join(__dirname, '../views')
 }
 
 /* GET chart page. */
