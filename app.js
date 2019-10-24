@@ -24,9 +24,7 @@ const io = require('socket.io')(server)
  */
 server.listen(port, () => console.log(`Server listening on port ${port}`))
 
-const testMessage = 'App.js here!'
-
-module.exports = { io, testMessage }
+module.exports = { io }
 require('./changeStreamCore') // note exports need to be defined before changestream
 // otherwise you'll get io not defined error
 // Create file to pull in modules in correct order??

@@ -3,10 +3,6 @@ const assert = require('assert')
 const app = require('./app')
 const io = app.io
 
-const testMessage = app.testMessage // debug
-
-console.log(`Exported app message(core): ${testMessage}`) // debug
-
 const MongoClient = require('mongodb').MongoClient
 const atlasURL = process.env.atlasURL
 
@@ -16,6 +12,13 @@ const client = new MongoClient(atlasURL, {
   keepAlive: true,
   connectTimeoutMS: 60000,
   socketTimeoutMS: 60000
+})
+
+io.on('connection', socket => {
+  console.log(`chartPage connected: ${socket.id}`)
+})
+io.on('disconnnet', socket => {
+  console.log(`chartPage disconnected: ${socket.id}`)
 })
 
 client.connect(err => {
@@ -35,30 +38,21 @@ client.connect(err => {
     }
   }
 
-  let changeStream
-
-  const transmit = data => {
-    io.emit('chartData', data)
-    console.log(`Data emitted: ${data}`)
+  const transmit = packet => {
+    io.emit('chartData', packet)
+    console.log(`packet emitted: ${packet}`)
   }
 
-  const startStream = () => { // add test for cursor available
+  (() => { // IIFE; add test for cursor available
     console.log(`startStream`)
-    changeStream = collection.watch([pipeline], {
+    const changeStream = collection.watch([pipeline], {
       fullDocument: 'updateLookup' })
     changeStream.on('change', document => {
       const packet = []
-      packet[0] = document.fullDocument.TimeStamp // could come from object:_id
+      packet[0] = document.fullDocument.TimeStamp // could parse from object:_id
       packet[1] = document.fullDocument.Data
       transmit(packet)
     })
   }
-
-  io.on('connection', socket => {
-    startStream()
-    console.log(`chartPage connected: ${socket.id}`)
-    socket.on('disconnect', () => {
-      console.log(`ChartPage disconnected: ${socket.id}`)
-    })
-  })
+  )()
 })
