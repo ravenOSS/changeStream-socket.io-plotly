@@ -1,0 +1,1 @@
+atlasURL = 'mongodb+srv://<userName>:<password>@<yourMongoInstance.mongodb.net/test?retryWrites=true&w=majority'

@@ -1,20 +1,27 @@
 const express = require('express')
-
-// const path = require('path')
-const cookieParser = require('cookie-parser')
+const path = require('path')
 const logger = require('morgan')
-
-const plotlyChartRouter = require('./routes/plotlyChart')
 
 const app = express()
 const port = 3300
 
 app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
 
-app.use('/plotlyChart', plotlyChartRouter)
+/* chart page options */
+const options = {
+  root: path.join(__dirname, './views')
+}
+
+/* GET chart page. */
+app.get('/', (req, res) => {
+  res.sendFile('./plotlyChart.html', options, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(`Sent: chart`)
+    }
+  })
+})
 
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
@@ -25,6 +32,3 @@ const io = require('socket.io')(server)
 server.listen(port, () => console.log(`Server listening on port ${port}`))
 
 module.exports = { io }
-require('./changeStreamCore') // note exports need to be defined before changestream
-// otherwise you'll get io not defined error
-// Create file to pull in modules in correct order??

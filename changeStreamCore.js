@@ -1,23 +1,19 @@
 const dotenv = require('dotenv').config()
 const assert = require('assert')
-const app = require('./app')
-const io = app.io
+const io = require('./app').io
 
 const MongoClient = require('mongodb').MongoClient
 const atlasURL = process.env.atlasURL
 
 const client = new MongoClient(atlasURL, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-  keepAlive: true,
-  connectTimeoutMS: 60000,
-  socketTimeoutMS: 60000
+  useUnifiedTopology: true
 })
 
 io.on('connection', socket => {
   console.log(`chartPage connected: ${socket.id}`)
 })
-io.on('disconnnet', socket => {
+io.on('disconnnect', socket => {
   console.log(`chartPage disconnected: ${socket.id}`)
 })
 
