@@ -37,7 +37,11 @@ npm (installed with node.js)
 
 A mongoDB replica set. Create free Atlas account at mongodb.com or create replicaset on your local machine. For testing, look at the docs for a single node replicaset.
 
-For local instance, follow instructions at the following URL. Make sure you understand where the 'data' directory is located. Suggest creating a plain text file with all the commands so that you have a document from which copy and paste (and edit for error corrections)
+For local instance, follow instructions at the following URL. Make sure you understand where the 'data' directory is located. Suggest creating a plain text file with all the commands so that you have a document from which copy and paste (and edit for error corrections).
+```
+<https://docs.mongodb.com/manual/tutorial/deploy-replica-set>
+```
+Ensure that you are using the latest version of mongo on your system. v3.6 introduced change streams.
 
 ### Installing
 
