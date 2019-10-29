@@ -1,4 +1,4 @@
-<h3 align="center">changeStream-socket.io-plotly</h3>
+<h2 align="center">changeStream-socket.io-plotly</h2>
 
 <div align="center">
 
@@ -8,7 +8,8 @@
 
 ---
 
-<p align="center"> Skeleton code for displaying live streaming data with MongoDB change stream, socket.io, and plotly.js charting
+<p align="center"> Skeleton code for displaying live streaming data with MongoDB change stream, socket.io, and plotly.js charting.
+Code is sparse but hopefully it is not dumbed down. Example should be extensible. However, error handling has been left out for readability.
     <br> 
 </p>
 
@@ -19,8 +20,6 @@
 - [Deployment](#deployment)
 - [Usage](#usage)
 - [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
 
@@ -38,6 +37,8 @@ npm (installed with node.js)
 
 A mongoDB replica set. Create free Atlas account at mongodb.com or create replicaset on your local machine. For testing, look at the docs for a single node replicaset.
 
+For local instance, follow instructions at the following URL. Make sure you understand where the 'data' directory is located. Suggest creating a plain text file with all the commands so that you have a document from which copy and paste (and edit for error corrections)
+
 ### Installing
 
 This is example code and not a library.
@@ -52,7 +53,7 @@ Install dependencies
 npm install
 ```
 
-rename example.dotenv to .env && edit atlas URL to include your username, password and url (obtained from Atlas console)
+rename example.dotenv to .env && edit atlas URL (or localhost) to include your username, password and url (obtained from Atlas console). For a local setup, security credentials are optional.
 ```
 atlasURL = 'mongodb+srv://<userName>:<password>@<yourMongoInstance.mongodb.net/test?retryWrites=true&w=majority'
 ```
@@ -85,7 +86,7 @@ Eslint 'standard'
 
 ## Usage <a name="usage"></a>
 
-Change generator.js to modify the generated data. Consider multiple data types and use Mongo's aggregation pipeline to create different change streams.
+Change generator.js to modify the generated data. Consider multiple data types and use Mongo's aggregation pipeline to watch different change streams.
 
 ## Deployment <a name = "deployment"></a>
 
@@ -96,7 +97,8 @@ This is not production code. It has been stripped down to aid readability.
 - [MongoDB](https://www.mongodb.com/) - Database
 - [Express](https://expressjs.com/) - Server Framework
 - [NodeJs](https://nodejs.org/en/) - Server Environment
-- [plotlyjs](https://plot.ly/javascript/)) - Charting library
+- [NodeJs](https://github.com/socketio/socket.io) - Realtime framework
+- [plotlyjs](https://plot.ly/javascript/) - Charting library
 
 ## Authors <a name = "authors"></a>
 
@@ -105,6 +107,4 @@ This is not production code. It has been stripped down to aid readability.
 
 ## Acknowledgements <a name = "acknowledgement"></a>
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+- Appreciate all those who've worked hard and open-sourced their code
