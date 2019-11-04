@@ -32,8 +32,8 @@ Display data from a MongoDB instance using change streams.
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
 ### Prerequisites
-node.js ^8.0.0
-npm (installed with node.js)
+`node.js ^8.0.0
+`npm (installed with node.js)
 
 A mongoDB replica set. Create free Atlas account at mongodb.com or create replicaset on your local machine. For testing, look at the docs for a single node replicaset.
 
@@ -101,7 +101,7 @@ This is not production code. It has been stripped down to aid readability.
 - [MongoDB](https://www.mongodb.com/) - Database
 - [Express](https://expressjs.com/) - Server Framework
 - [NodeJs](https://nodejs.org/en/) - Server Environment
-- [NodeJs](https://github.com/socketio/socket.io) - Realtime framework
+- [socket.io](https://github.com/socketio/socket.io) - Realtime framework
 - [plotlyjs](https://plot.ly/javascript/) - Charting library
 
 ## Authors <a name = "authors"></a>
@@ -111,4 +111,4 @@ This is not production code. It has been stripped down to aid readability.
 
 ## Acknowledgements <a name = "acknowledgement"></a>
 
-- Appreciate all those who've worked hard and open-sourced their code
+- We greatly appreciate all those who've worked hard and open-sourced their code
