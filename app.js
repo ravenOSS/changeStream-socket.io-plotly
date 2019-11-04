@@ -31,4 +31,4 @@ const io = require('socket.io')(server)
  */
 server.listen(port, () => console.log(`Server listening on port ${port}`))
 
-module.exports = { io }
+module.exports = { io } // export socket instance

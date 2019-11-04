@@ -10,13 +10,6 @@ const client = new MongoClient(atlasURL, {
   useUnifiedTopology: true
 })
 
-io.on('connection', socket => {
-  console.log(`chartPage connected: ${socket.id}`)
-})
-io.on('disconnnect', socket => {
-  console.log(`chartPage disconnected: ${socket.id}`)
-})
-
 client.connect(err => {
   assert.strictEqual(null, err)
   if (err) {
@@ -33,6 +26,13 @@ client.connect(err => {
       }
     }
   }
+
+  io.on('connection', socket => {
+    console.log(`chartPage connected: ${socket.id}`)
+  socket.on('disconnect', socket => {
+    console.log(`chartPage disconnected!`)
+  })
+})
 
   const transmit = packet => {
     io.emit('chartData', packet)
