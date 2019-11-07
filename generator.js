@@ -1,7 +1,4 @@
-/* This program is for streaming data to MongoDB
-to test charting code.
-*/
-// atlas djr@raveniot.com
+// Stream data to MongoDB
 const dotenv = require('dotenv').config()
 const MongoClient = require('mongodb').MongoClient
 const assert = require('assert')

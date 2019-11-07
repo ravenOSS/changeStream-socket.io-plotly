@@ -5,118 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Charts</title>
-  <!-- <link rel="stylesheet" href="/stylesheets/style.css"> -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+
 </head>
 
 <body>
-
-  <h1>Live Charting</h1>
-  <p><h2> mongodb change stream, socket.io, plotly.js</h2></p>
+  <div class="container">
+  <h2>Live Charting with Mongodb change stream, socket.io, plotly.js</h2>
 
   <div id="pchart"></div>
+  </div>
 
-<script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
-const layout = {
- title:'Streaming data to Plotly',
- height: 550,
- width: 1200,
- font: {
-   family: 'Lato',
-   size: 20,
-   color: 'rgb(100,150,200)'
- },
- plot_bgcolor: 'rgba(200,255,0,0.1)',
- margin: {
-   pad: 10
- },
- xaxis: {
-   title: 'Timestamp',
-   titlefont: {
-    family: 'Verdana, Sans-serif',
-     color: 'rgb(100,150,200)',
-     size: 18
-   },
-   type: 'date'
- },
- yaxis: {
-   title: 'Data Measurement',
-   titlefont: {
-    family: 'Verdana, Sans-serif',
-     color: 'rgb(100,150,200)',
-     size: 18
-   },
-   type: 'linear',
-   range: [0, 100]
-  }
-};
-
-// Plotly requires an initial trace for animation to work
-// Create a couple of x and y coordinates in arrays
-let xArray0 = [moment().subtract(10, 'sec').format(), moment().format() ]
-let yArray0 = [0, .1]
-
-let trace0 = {
-   x: xArray0,
-   y: yArray0,
-    type: 'scatter',
-    mode: 'lines',
-    line: {shape: 'spline'}
- }
-
-let data = [trace0]
-
-Plotly.newPlot('pchart', data, layout)
-
-const dataPoints = 15
-
-let socket = io();
-socket.on('chartData', (msg) => {
-  console.log(`msg.Time: ${msg[0]}`)
-  console.log(`msg.Data: ${msg[1]}`)
-
-if (xArray0.length < dataPoints ) {
-  xArray0.push(msg[0])
-  yArray0.push(msg[1])
-} else {
-  xArray0.push(msg[0])
-  xArray0.shift()
-  yArray0.push(msg[1])
-  yArray0.shift()
-}
-
-trace0 = {
-   xArray0,
-   yArray0,
-    type: 'scatter',
-    mode: 'lines+text',
-    line: {shape: 'spline'}
-   //  line: {simplify: false},
-}
-
-let data = [trace0] // debug 
- console.log(`xArray0 after new data: ${xArray0}`)
- console.log(`yArray0 after new data: ${yArray0}`)
-
-
-Plotly.animate('pchart', { 
-  data, 
-  traces: [0], 
-  layout: {
-    xaxis: {
-      range: [xArray0[0], xArray0[xArray0.length - 1]]
-    } 
-  },
-  transition: {
-    duration: 2500,
-    easing: 'cubic-in-out'
-  },
-  })
-});
-
-</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="./chartLogic.js"></script>
 </body>
 </html>

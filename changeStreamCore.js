@@ -29,10 +29,10 @@ client.connect(err => {
 
   io.on('connection', socket => {
     console.log(`chartPage connected: ${socket.id}`)
-  socket.on('disconnect', socket => {
-    console.log(`chartPage disconnected!`)
+    socket.on('disconnect', () => {
+      console.log(`chartPage disconnected!`)
+    })
   })
-})
 
   const transmit = packet => {
     io.emit('chartData', packet)
