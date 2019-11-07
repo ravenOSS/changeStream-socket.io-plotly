@@ -13,7 +13,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "nodemon DEBUG=changeStreamCore:* changeStreamCore.js",
+    "start": "nodemon DEBUG=app:* app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

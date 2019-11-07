@@ -14,7 +14,7 @@ const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 // note that socket is attached to server not app
 
-// Listen on provided port, on all network interfaces.
-server.listen(port, () => console.log(`Server listening on port ${port}`))
+server.listen(port, () => console.log(`Server on port:${port}`))
 
 module.exports = { io } // export socket instance
+require('./changeStreamCore')
