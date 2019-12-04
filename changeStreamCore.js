@@ -13,12 +13,13 @@ const client = new MongoClient(atlasURL, {
 client.connect(err => {
   assert.strictEqual(null, err)
   if (err) {
-    console.log(`We've got a problem`)
+    console.log(`Core problem connecting to Mongo!`)
   } else {
-    console.log('Connected successfully to MongoDB')
+    console.log('Core connected to MongoDB')
   }
   const db = client.db('plottingData')
   const collection = db.collection('streamTest')
+
   const pipeline = {
     $match: {
       operationType: {

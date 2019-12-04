@@ -14,9 +14,9 @@ const client = new MongoClient(url, {
 client.connect(err => {
   assert.strict.equal(null, err)
   if (err) {
-    console.log(`We've got a problem`)
+    console.log(`Generator problem connecting to Mongo!`)
   } else {
-    console.log('Connected successfully to MongoDB')
+    console.log('Generator connected to MongoDB')
   }
 
   const db = client.db('plottingData')

@@ -1,6 +1,6 @@
 const layout = {
   title: 'Streaming data to Plotly',
-  height: 600,
+  height: 650,
   width: 1000,
   font: {
     family: 'Lato',
@@ -34,7 +34,7 @@ const layout = {
 
 // Plotly requires an initial trace for animation to work
 // Create a couple of x and y coordinates in arrays
-const xArray0 = [moment().subtract(10, 'sec').format(), moment().format() ]
+const xArray0 = [moment().subtract(10, 'sec').format(), moment().format()]
 const yArray0 = [0, 0.2]
 
 let trace0 = {
@@ -75,9 +75,10 @@ socket.on('chartData', (packet) => {
     //  line: {simplify: false},
   }
 
-  const data = [trace0] // debug
-  console.log(`xArray0 after new data: ${xArray0}`)
-  console.log(`yArray0 after new data: ${yArray0}`)
+  console.log(`xArray0 after new data: ${xArray0}`) // debug
+  console.log(`yArray0 after new data: ${yArray0}`) // debug
+
+  const data = [trace0]
 
   Plotly.animate('pchart', {
     data,
