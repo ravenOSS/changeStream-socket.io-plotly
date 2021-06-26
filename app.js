@@ -15,6 +15,7 @@ const io = require('socket.io')(server)
 // note that socket is attached to server not app
 
 server.listen(port, () => console.log(`Server on port:${port}`))
+// can this syntax be abbreviated further?
 
 module.exports = { io } // export socket instance
 require('./changeStreamCore')
